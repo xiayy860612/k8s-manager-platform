@@ -1,0 +1,23 @@
+@startuml "Domain Model"
+class Cluster {
+    name: string
+    status: string
+    message: string
+}
+
+class ClusterConfig
+
+Cluster --> ClusterConfig: generate
+
+class Deployment {
+    name: string
+    status: string
+    message: string
+}
+
+class DeploymentConfig
+
+Deployment --> DeploymentConfig: generate
+
+Deployment "0..*" --> "1..*" Cluster: bind
+@enduml

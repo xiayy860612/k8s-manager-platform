@@ -1,0 +1,27 @@
+@startuml "Activity"
+|DevOps|
+start
+: trigger to create cluster;
+|Platform|
+: generate cluster config;
+|k8s|
+: trigger create cluster with specific info;
+|Platform|
+: update status of created cluster;
+|DevOps|
+: get info of created cluster;
+|DevOps|
+: inform cluster info to Dev;
+|Dev|
+: receive cluster info;
+: trigger to deploy application;
+|Platform|
+: generate deployment config;
+|k8s|
+: trigger application deployment with specific info;
+|Platform|
+: update status of deployment;
+|Dev|
+: get info of application deployment;
+end
+@enduml

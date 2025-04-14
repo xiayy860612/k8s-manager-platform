@@ -1,0 +1,21 @@
+@startuml "Workflow"
+
+actor DevOps
+actor Dev
+node "Deployment Platform" as P
+cloud k8s
+control Monitor as M
+
+DevOps --> P: create cluster 
+P ..> k8s: trigger create cluster with specific info
+DevOps --> P: get info of created clusters
+M --> P: check status of cluster
+M --> P: update status of cluster
+DevOps ..> Dev: inform cluster info
+Dev --> P: deploy application
+P ..> k8s: trigger application deployment with specific info
+M --> k8s: check status of deplopyment
+M --> P: update status of deployment
+Dev --> P: get info of application deployment, include status
+
+@enduml

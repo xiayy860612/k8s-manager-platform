@@ -20,61 +20,23 @@ You will design and develop a cloud-based Kubernetes SaaS service that enables u
 
 ### Workflow
 
-```puml
-actor DevOps
-actor Dev
-node "Deployment Platform" as P
-cloud k8s
-control Monitor as M
-
-DevOps --> P: create cluster 
-P ..> k8s: trigger create cluster with specific info
-DevOps --> P: get info of created clusters
-M --> P: check status of cluster
-M --> P: update status of cluster
-DevOps ..> Dev: inform cluster info
-Dev --> P: deploy application
-P ..> k8s: trigger application deployment with specific info
-M --> k8s: check status of deplopyment
-M --> P: update status of deployment
-Dev --> P: get info of application deployment, include status
-```
-
-- Deployment Platform, take charge of interaction with k8s
-- Monitor, take charge of getting status of Cluster/Deployment and update to platform.
+![Activity](Activity.png)
 
 ### Domain Model
 
-```puml
-
-class Cluster {
-    name: string
-    status: string
-    message: string
-}
-
-class ClusterConfig
-
-Cluster --> ClusterConfig: generate
-
-class Deployment {
-    name: string
-    status: string
-    message: string
-}
-
-class DeploymentConfig
-
-Deployment --> DeploymentConfig: generate
-
-Deployment "0..*" --> "1..*" Cluster: bind
-
-```
+![Domain Model](Domain%20Model.png)
 
 - Cluster, represent nodes in a group, it will be used in deployment.
 - ClusterConfig, cluster config for specific k8s platform, related info is from Cluster
 - Deployment, represent a flow of application deployment, it will use nodes from specific Cluster.
 - DeploymentConfig, deployment config for specific k8s platform, related info is from Deployment
+
+### Component Interaction
+
+![interaction](interaction.png)
+
+- Deployment Platform, take charge of interaction with k8s
+- Monitor, take charge of getting status of Cluster/Deployment and update to platform.
 
 ## Preparation
 
