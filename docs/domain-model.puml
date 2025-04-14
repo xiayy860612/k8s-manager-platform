@@ -1,13 +1,28 @@
 @startuml "Domain Model"
-class Cluster {
+
+class K8sProvider {
     name: string
-    status: string
-    message: string
+
+    create(): Cluster
+    deploy(cluster: Cluster, config: DeploymentConfigSnapshot): Deployment
 }
 
-class ClusterConfig
+class K8sProviderProperties {
+    url: string
+    clientId: string
+    secret: string
+}
 
-Cluster --> ClusterConfig: generate
+K8sProvider "1" --> "1" K8sProviderProperties: has
+
+class Cluster {
+    name: string
+}
+
+K8sProvider --> "0..*" Cluster: create
+Cluster --> "1" K8sProvider: trigger deploy
+
+class DeploymentConfig
 
 class Deployment {
     name: string
@@ -15,9 +30,15 @@ class Deployment {
     message: string
 }
 
-class DeploymentConfig
+Deployment "1" --> "1" Cluster: deploy to
 
-Deployment --> DeploymentConfig: generate
+class DeploymentConfigSnapshot {
+    createdTime: datetime
+}
 
-Deployment "0..*" --> "1..*" Cluster: bind
+DeploymentConfigSnapshot "1" --> "1" DeploymentConfig: take a shot when deployment
+
+Deployment "1" --> "1..*" DeploymentConfigSnapshot: links
+
+DeploymentConfig "1" --> "0..*" Deployment: bind
 @enduml

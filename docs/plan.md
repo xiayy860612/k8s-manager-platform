@@ -26,17 +26,11 @@ You will design and develop a cloud-based Kubernetes SaaS service that enables u
 
 ![Domain Model](Domain%20Model.png)
 
-- Cluster, represent nodes in a group, it will be used in deployment.
-- ClusterConfig, cluster config for specific k8s platform, related info is from Cluster
-- Deployment, represent a flow of application deployment, it will use nodes from specific Cluster.
-- DeploymentConfig, deployment config for specific k8s platform, related info is from Deployment
-
-### Component Interaction
-
-![interaction](interaction.png)
-
-- Deployment Platform, take charge of interaction with k8s
-- Monitor, take charge of getting status of Cluster/Deployment and update to platform.
+- K8sProvider, it's a platform which provides k8s services
+- Cluster, represent a k8s cluster in a specific k8s provider
+- DeploymentConfig, it's used to deploy application into a selected cluster
+- DeploymentConfigSnapshot, a clone of DeploymentConfig and generated when deployment happen.
+- Deployment, represent an application deployment in specific Cluster
 
 ## Preparation
 
@@ -48,12 +42,14 @@ You will design and develop a cloud-based Kubernetes SaaS service that enables u
 Backlog list below, the details will be mentioned in its own page,
 according to priority order from high to low:
 
-1. DevOps set up k8s environment
+1. DevOps set up k8s provider environment in local
 2. Dev set up init project, include frontend and backend
 3. User can create Cluster in platform
-4. User can see list of Cluster infos, include current status
-5. User can create Deployment in platform
-6. User can see list of Deployment infos, include current status
-7. integrate basic login support
-8. integrate RBAC for user
-9. assign permission to APIs accorind to design
+4. User can see list of Clusters
+5. User can create DeploymentConfig in platform
+6. User can select a DeploymentConfig to trigger deployment
+7. User can see list of Deployment infos, include current status
+8. integrate basic login support
+9. integrate RBAC for user
+10. assign permission to APIs accorind to design
+11. Add support of AWS k8s provider support

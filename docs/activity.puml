@@ -1,27 +1,25 @@
 @startuml "Activity"
 |DevOps|
 start
-: trigger to create cluster;
+: trigger create cluster;
+: select k8s Provider;
 |Platform|
-: generate cluster config;
-|k8s|
-: trigger create cluster with specific info;
+: trigger create cluster action from selected k8s Provider;
+|k8s Provider|
+: create cluster;
 |Platform|
-: update status of created cluster;
-|DevOps|
-: get info of created cluster;
-|DevOps|
-: inform cluster info to Dev;
+: save created cluster info and related k8s Provider info;
 |Dev|
-: receive cluster info;
-: trigger to deploy application;
+: create deployment config;
+: trigger deployment;
+: select a created cluster;
 |Platform|
-: generate deployment config;
-|k8s|
-: trigger application deployment with specific info;
+: get k8s Provider according to selected cluster;
+: trigger deployment action in selected cluster provided by k8s Provider;
+|k8s Provider|
+: deploy application in selected cluster;
 |Platform|
-: update status of deployment;
-|Dev|
-: get info of application deployment;
+: save deployment info;
 end
 @enduml
+
