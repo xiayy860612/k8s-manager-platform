@@ -1,18 +1,18 @@
-import { authApi } from "@/api/auth";
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { userReducer } from "./user";
+import { clusterApi } from "@/api/cluster";
 
 export const store = configureStore({
   reducer: {
     // Add reducers here
-    [authApi.reducerPath]: authApi.reducer,
+    [clusterApi.reducerPath]: clusterApi.reducer,
     user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(authApi.middleware),
+    }).concat(clusterApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
