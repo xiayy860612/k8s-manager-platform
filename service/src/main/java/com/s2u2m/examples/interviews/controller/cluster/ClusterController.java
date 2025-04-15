@@ -34,7 +34,7 @@ public class ClusterController {
           "Provider[{0}] is not supported", request.getProvider());
     }
 
-    Cluster cluster = clusterService.createCluster(provider, request.getName());
+    Cluster cluster = clusterService.createCluster(provider, request.getName(), request.getWorkerCount());
     return CreateClusterResponse.builder()
         .id(cluster.getId()).name(cluster.getName()).build();
   }

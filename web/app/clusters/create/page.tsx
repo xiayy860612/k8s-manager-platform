@@ -1,7 +1,7 @@
 "use client";
 
-import '@ant-design/v5-patch-for-react-19';
-import { Button, Form, Input, message, Select } from "antd";
+import "@ant-design/v5-patch-for-react-19";
+import { Button, Form, Input, InputNumber, message, Select } from "antd";
 import styles from "./styles.module.css";
 import { K8sProviderName, useCreateClusterMutation } from "@/api/cluster";
 import { useRouter } from "next/navigation";
@@ -9,13 +9,15 @@ import { useRouter } from "next/navigation";
 interface FormProps {
   provider: string;
   name: string;
+  workerCount: number;
 }
 
 export default function CreateClusterPage() {
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
 
-  const [createCluster, { isLoading, isError, data }] = useCreateClusterMutation();
+  const [createCluster, { isLoading, isError, data }] =
+    useCreateClusterMutation();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -28,11 +30,10 @@ export default function CreateClusterPage() {
 
   const handleSubmit = async (values: FormProps) => {
     try {
-      await createCluster({... values}).unwrap();
-      message.success('Create Success');
+      await createCluster({ ...values }).unwrap();
+      message.success("Create Success");
       router.back();
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (
@@ -53,6 +54,21 @@ export default function CreateClusterPage() {
           rules={[{ required: true, message: "Please input cluster name" }]}
         >
           <Input style={{ width: 200 }} placeholder="Enter cluster name" />
+        </Form.Item>
+
+        <Form.Item<FormProps> label="Worker Count" name="workerCount">
+          <InputNumber style={{ width: 200 }}
+            min="0" max="3"
+            parser={(value) => value?.replace(/[^0-9]/g, "") || 0}
+            onKeyDown={(e) => {
+              if (['.', '-', 'e'].includes(e.key)) {
+                e.preventDefault();
+              }
+            }}
+            onChange={(value) => {
+              return Math.round(Number(value) ?? 0);
+            }}
+          />
         </Form.Item>
 
         <Form.Item>

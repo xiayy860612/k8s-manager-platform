@@ -35,11 +35,11 @@ class ClusterServiceTest {
     String name = "test";
     Cluster cluster = new Cluster();
     cluster.setName(name);
-    when(provider.createCluster(anyString())).thenReturn(cluster);
+    when(provider.createCluster(anyString(), any())).thenReturn(cluster);
 
     when(clusterRepository.save(any())).thenReturn(cluster);
 
-    Cluster result = clusterService.createCluster(provider, name);
+    Cluster result = clusterService.createCluster(provider, name, 0);
     Assertions.assertNotNull(result);
     Assertions.assertEquals(name, result.getName());
   }
@@ -53,7 +53,7 @@ class ClusterServiceTest {
     String name = "test";
 
     PlatformException exception = Assertions.assertThrows(PlatformException.class, () -> {
-      clusterService.createCluster(provider, name);
+      clusterService.createCluster(provider, name, 0);
     });
     Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     Assertions.assertEquals(ErrorCode.CLUSTER_ALREADY_EXISTED, exception.getCode());
