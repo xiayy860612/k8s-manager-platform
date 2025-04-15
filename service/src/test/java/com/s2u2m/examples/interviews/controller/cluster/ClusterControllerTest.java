@@ -47,7 +47,7 @@ class ClusterControllerTest {
     when(clusterService.createCluster(any(), any())).thenReturn(cluster);
 
     CreateClusterRequest request = CreateClusterRequest.builder()
-        .provider(K8sProviderName.LOCAL)
+        .provider(K8sProviderName.K3D)
         .name(name)
         .build();
     mvc.perform(post("/api/clusters")
@@ -62,7 +62,7 @@ class ClusterControllerTest {
     when(providerFactory.getProvider(any())).thenReturn(null);
 
     CreateClusterRequest request = CreateClusterRequest.builder()
-        .provider(K8sProviderName.LOCAL)
+        .provider(K8sProviderName.K3D)
         .name("test")
         .build();
     mvc.perform(post("/api/clusters")
@@ -83,7 +83,7 @@ class ClusterControllerTest {
     when(clusterService.createCluster(any(), any())).thenThrow(exception);
 
     CreateClusterRequest request = CreateClusterRequest.builder()
-        .provider(K8sProviderName.LOCAL)
+        .provider(K8sProviderName.K3D)
         .name(name)
         .build();
     mvc.perform(post("/api/clusters")

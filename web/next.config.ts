@@ -28,6 +28,14 @@ const nextConfig: NextConfig = {
   webpack: (config, context) => {
     return resolveMswAlias(context?.isServer, config);
   },
+  rewrites: async () => {
+    return [
+      {
+        source: "/api/:path*",
+        destination: `http://localhost:8080/api/:path*`,
+      },
+    ];
+  }
 };
 
 export default nextConfig;

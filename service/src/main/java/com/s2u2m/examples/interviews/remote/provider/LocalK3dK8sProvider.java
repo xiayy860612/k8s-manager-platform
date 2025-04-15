@@ -25,7 +25,7 @@ public class LocalK3dK8sProvider implements K8sProvider {
 
   @Override
   public K8sProviderName getProviderName() {
-    return K8sProviderName.LOCAL;
+    return K8sProviderName.K3D;
   }
 
   @Override

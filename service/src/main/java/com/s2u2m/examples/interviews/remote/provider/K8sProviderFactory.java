@@ -10,7 +10,7 @@ public class K8sProviderFactory {
 
   public K8sProviderFactory(LocalK3dK8sProvider localK3dK8sProvider) {
     providers = Map.of(
-        K8sProviderName.LOCAL, localK3dK8sProvider
+        K8sProviderName.K3D, localK3dK8sProvider
     );
   }
 

@@ -1,4 +1,4 @@
-import loginHandler from "../auth/mock";
+import clusterHandler from "../cluster/mock";
 
-const handlers = [loginHandler];
+const handlers = [clusterHandler];
 export default handlers;
