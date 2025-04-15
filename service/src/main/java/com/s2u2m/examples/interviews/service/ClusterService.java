@@ -17,7 +17,7 @@ public class ClusterService {
     this.clusterRepository = clusterRepository;
   }
 
-  public Cluster createCluster(K8sProvider provider, String name) {
+  public Cluster createCluster(K8sProvider provider, String name, Integer workerCount) {
     boolean isExisted = clusterRepository
         .existsByProviderAndName(provider.getProviderName(), name);
     if (isExisted) {
@@ -27,7 +27,7 @@ public class ClusterService {
           name, provider.getProviderName());
     }
 
-    Cluster cluster = provider.createCluster(name);
+    Cluster cluster = provider.createCluster(name, workerCount);
     cluster = clusterRepository.save(cluster);
     return cluster;
   }

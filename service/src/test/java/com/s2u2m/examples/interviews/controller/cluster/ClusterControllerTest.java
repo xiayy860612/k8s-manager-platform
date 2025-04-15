@@ -44,7 +44,7 @@ class ClusterControllerTest {
     String name = "test";
     Cluster cluster = new Cluster();
     cluster.setName(name);
-    when(clusterService.createCluster(any(), any())).thenReturn(cluster);
+    when(clusterService.createCluster(any(), any(), any())).thenReturn(cluster);
 
     CreateClusterRequest request = CreateClusterRequest.builder()
         .provider(K8sProviderName.K3D)
@@ -80,7 +80,7 @@ class ClusterControllerTest {
     PlatformException exception = new PlatformException(
         HttpStatus.BAD_REQUEST,
         ErrorCode.CLUSTER_ALREADY_EXISTED, "");
-    when(clusterService.createCluster(any(), any())).thenThrow(exception);
+    when(clusterService.createCluster(any(), any(), any())).thenThrow(exception);
 
     CreateClusterRequest request = CreateClusterRequest.builder()
         .provider(K8sProviderName.K3D)

@@ -8,6 +8,7 @@ export enum K8sProviderName {
 export interface CreateClusterRequest {
   provider: string;
   name: string;
+  workerCount: number
 }
 
 export interface CreateClusterResponse {

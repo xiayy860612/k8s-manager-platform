@@ -6,5 +6,5 @@ import com.s2u2m.examples.interviews.repository.cluster.Cluster;
 public interface K8sProvider {
 
   K8sProviderName getProviderName();
-  Cluster createCluster(String name);
+  Cluster createCluster(String name, Integer workerCount);
 }

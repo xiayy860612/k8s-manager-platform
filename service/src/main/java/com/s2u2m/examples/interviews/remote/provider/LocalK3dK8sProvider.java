@@ -29,10 +29,11 @@ public class LocalK3dK8sProvider implements K8sProvider {
   }
 
   @Override
-  public Cluster createCluster(String name) {
+  public Cluster createCluster(String name, Integer workerCount) {
     String result;
     try {
-      ProcessUtils.runCommand(List.of("k3d", "cluster", "create", name));
+      ProcessUtils.runCommand(
+          List.of("k3d", "cluster", "create", name, "--agents", workerCount.toString()));
       result = ProcessUtils.runCommand(
           List.of("k3d", "cluster", "list", name, "--token", "-o", "json"));
     } catch (IOException | InterruptedException e) {
